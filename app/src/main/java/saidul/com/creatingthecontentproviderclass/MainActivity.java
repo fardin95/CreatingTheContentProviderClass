@@ -1,6 +1,7 @@
 package saidul.com.creatingthecontentproviderclass;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import saidul.com.creatingthecontentproviderclass.CustomProvider.ContactProviderStatus;
 import saidul.com.creatingthecontentproviderclass.database.DBhelper;
@@ -84,8 +86,19 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+        TextView memID_tv, memName_tv;
 
+        memID_tv = (TextView) view.findViewById(R.id.member_id);
+        memName_tv = (TextView) view.findViewById(R.id.member_name);
 
+        String member_id = memID_tv.getText().toString();
+        String member_name = memName_tv.getText().toString();
+
+        Intent intent = new Intent(getApplicationContext(), Modify_member.class);
+        intent.putExtra("member_id", member_id);
+        intent.putExtra("member_name", member_name);
+
+        startActivity(intent);
 
     }
 

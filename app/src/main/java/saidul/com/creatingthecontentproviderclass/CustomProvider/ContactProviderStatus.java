@@ -2,7 +2,6 @@ package saidul.com.creatingthecontentproviderclass.CustomProvider;
 
 import android.net.Uri;
 
-import saidul.com.creatingthecontentproviderclass.AppController;
 import saidul.com.creatingthecontentproviderclass.database.DBhelper;
 
 /**
@@ -10,7 +9,7 @@ import saidul.com.creatingthecontentproviderclass.database.DBhelper;
  */
 public class ContactProviderStatus {
     // store package name
-    public static  final  String AUTH = AppController.getContext().getPackageName();
+    public static  final  String AUTH = "saidul.com.creatingthecontentproviderclass";
 
     // main content
     static final String URL = "content://" + AUTH + "/" + DBhelper.TABLE_MEMBER;

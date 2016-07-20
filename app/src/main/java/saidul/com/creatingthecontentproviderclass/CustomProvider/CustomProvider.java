@@ -27,7 +27,7 @@ public class CustomProvider extends ContentProvider {
     static {
         uriMatcher = new UriMatcher(uriMatcher.NO_MATCH);
         uriMatcher.addURI(ContactProviderStatus.AUTH, DBhelper.TABLE_MEMBER, ContactProviderStatus.members);
-        uriMatcher.addURI(ContactProviderStatus.AUTH, DBhelper.TABLE_MEMBER+"/#",ContactProviderStatus.member_id);
+        uriMatcher.addURI(ContactProviderStatus.AUTH, DBhelper.TABLE_MEMBER + "/#", ContactProviderStatus.member_id);
     }
 
 
@@ -50,7 +50,7 @@ public class CustomProvider extends ContentProvider {
         db = dBhelper.getReadableDatabase();
 
         Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-
+        cursor.setNotificationUri(getContext().getContentResolver(),uri);
         return cursor;
     }
 
@@ -76,15 +76,15 @@ public class CustomProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        SQLiteDatabase db ;
+        SQLiteDatabase db;
         db = dBhelper.getWritableDatabase();
 
         // check uri
-        if (uriMatcher.match(uri)==ContactProviderStatus.members){
+        if (uriMatcher.match(uri) == ContactProviderStatus.members) {
             long insert = db.insert(DBhelper.TABLE_MEMBER, null, contentValues);
-            if (insert>0){
+            if (insert > 0) {
                 Uri _uri = ContentUris.withAppendedId(ContactProviderStatus.CONTENT_URI, insert);
-                getContext().getContentResolver().notifyChange(_uri,null);
+                getContext().getContentResolver().notifyChange(_uri, null);
                 return _uri;
             }
         }
@@ -103,8 +103,7 @@ public class CustomProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case ContactProviderStatus.members:
-                rowsDeleted = db.delete(DBhelper.TABLE_MEMBER, selection,
-                        selectionArgs);
+                rowsDeleted = db.delete(DBhelper.TABLE_MEMBER, selection, selectionArgs);
                 break;
 
             case ContactProviderStatus.member_id:
@@ -130,7 +129,7 @@ public class CustomProvider extends ContentProvider {
                 rowsUpdated = db.update(DBhelper.TABLE_MEMBER, values, selection, selectionArgs);
                 break;
 
-            case  ContactProviderStatus.member_id:
+            case ContactProviderStatus.member_id:
                 String id = uri.getLastPathSegment();
                 rowsUpdated = db.update(DBhelper.TABLE_MEMBER, values, DBhelper.MEMBER_ID + "=" + id, null);
                 break;
