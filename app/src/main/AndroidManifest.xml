@@ -22,7 +22,7 @@
         <provider
             android:name=".CustomProvider.CustomProvider"
             android:authorities="saidul.com.creatingthecontentproviderclass"
-            android:exported="false"></provider>
+            android:exported="true"></provider>
     </application>
 
 </manifest>
